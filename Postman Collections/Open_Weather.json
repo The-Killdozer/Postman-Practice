@@ -435,7 +435,7 @@
 							"});\r",
 							"\r",
 							"\r",
-							" testCode(pm,200)\r",
+							" testCode(pm,201)\r",
 							"\r",
 							"\r",
 							"\r",
@@ -507,7 +507,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "393a5fcb-daaa-444f-acbf-8c3f655b18f1",
+				"id": "08e1b428-3c4e-4029-9982-8b01b4a86455",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -526,10 +526,9 @@
 					"}\r",
 					"\r",
 					"testCode = function (pm, paramCode) {\r",
-					"\r",
 					"    pm.test(\"Your test name\", function () {\r",
-					"        var responeCode = pm.response.code;\r",
-					"        pm.expect(responeCode).to.eql(paramCode);\r",
+					"        var responeCode =  pm.response.code;\r",
+					"        pm.expect((responeCode),`error`).to.eql(paramCode);\r",
 					"    });\r",
 					"}"
 				]
@@ -538,7 +537,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "24f21ebd-814d-495c-b5ac-83ca9bf51696",
+				"id": "72c76f1f-7ef3-4439-9e46-c7b564139eb4",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
