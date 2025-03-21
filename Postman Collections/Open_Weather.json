@@ -1,0 +1,544 @@
+{
+	"info": {
+		"_postman_id": "775025aa-16da-43c5-882c-70f17ee34adc",
+		"name": "Open Weather",
+		"schema": "https://schema.postman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Stations",
+			"item": [
+				{
+					"name": "Stations List",
+					"id": "09e016c0-7fbb-4401-b434-0bcefafb00a5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"id": "9490d6db-dbab-4d4f-b5fd-23e5e598f88a"
+		},
+		{
+			"name": "Geocoding",
+			"item": [
+				{
+					"name": "Lat & Lon By City Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "71ef1b9f-403d-442f-bec4-88a800b13ea3",
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"response.forEach(obj => {\r",
+									"    if (obj.name === \"Barcelona\" && obj.country === \"ES\") {\r",
+									"        pm.collectionVariables.set(\"lat\", obj.lat);\r",
+									"        pm.collectionVariables.set(\"lon\", obj.lon);\r",
+									"    }\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "7a534a78-eb56-47a8-9f2c-2a89ccb2ad48",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/geo/1.0/direct?q=Barcelona,ES&appid={{api_key}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"geo",
+								"1.0",
+								"direct"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "Barcelona,ES"
+								},
+								{
+									"key": "appid",
+									"value": "{{api_key}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "ca357e91-bdfe-4aef-b66b-b39b4ccc9030"
+		},
+		{
+			"name": "Api Key",
+			"item": [
+				{
+					"name": "Valid API key",
+					"id": "cb65f757-d2d6-47b6-aa3c-ea55bf447669",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid API Key",
+					"id": "d90b03ef-a52a-4862-9400-3e2976852ca3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"id": "aa64b305-00cb-4c3d-adb1-b9c230bec323"
+		},
+		{
+			"name": "External CSV",
+			"item": [
+				{
+					"name": "Current Weather Barcelona",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f3c84e58-eea7-479c-8d9f-f0cbfda42c39",
+								"exec": [
+									"pm.collectionVariables.set(\"unit_type\", pm.iterationData.get(\"unit_type\"))"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "8cb69e5f-bf13-41a9-9215-46f2e1891413",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.set(\"unit_type\", \"metric\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "c508fb26-711c-4498-a401-348128cdd8fc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/data/2.5/weather?lat={{lat}}&lon={{lon}}&appid={{api_key}}&units={{unit_type}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"weather"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "{{lat}}"
+								},
+								{
+									"key": "lon",
+									"value": "{{lon}}"
+								},
+								{
+									"key": "appid",
+									"value": "{{api_key}}"
+								},
+								{
+									"key": "units",
+									"value": "{{unit_type}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "680195e1-4be4-4fbf-9274-eb1037ee9fb0"
+		},
+		{
+			"name": "Multiple Iterations [Unit Metric]",
+			"item": [
+				{
+					"name": "Lat & Lon By City Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "71ef1b9f-403d-442f-bec4-88a800b13ea3",
+								"exec": [
+									"pm.test(\"Status Code is 200 OK\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"response.forEach(obj => {\r",
+									"    if (obj.name === \"Barcelona\" && obj.country === \"ES\") {\r",
+									"        pm.collectionVariables.set(\"lat\", obj.lat);\r",
+									"        pm.collectionVariables.set(\"lon\", obj.lon);\r",
+									"    }\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "0af59086-a51e-4b51-a11a-63e697601e75",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/geo/1.0/direct?q=Barcelona,ES&appid={{api_key}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"geo",
+								"1.0",
+								"direct"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "Barcelona,ES"
+								},
+								{
+									"key": "appid",
+									"value": "{{api_key}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Current Weather Barcelona",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f3c84e58-eea7-479c-8d9f-f0cbfda42c39",
+								"exec": [
+									"const unitValues = [\"standard\", \"metric\", \"imperial\"];\r",
+									"\r",
+									"let index = pm.collectionVariables.get(\"current_index\") || 0;\r",
+									"\r",
+									"if (index < unitValues.length) {\r",
+									"    pm.collectionVariables.set(\"unit_type\", unitValues[index]);\r",
+									"    pm.collectionVariables.set(\"current_index\", index + 1);\r",
+									"    if (index < unitValues.length - 1) {\r",
+									"        pm.execution.setNextRequest(\"Current Weather Barcelona\");\r",
+									"    } \r",
+									" }"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "8cb69e5f-bf13-41a9-9215-46f2e1891413",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"const unitValues = [\"standard\", \"metric\", \"imperial\"];\r",
+									"const index = pm.collectionVariables.get(\"current_index\") || 0;\r",
+									"\r",
+									"\r",
+									"\r",
+									"if (index >= unitValues.length) {\r",
+									"    pm.collectionVariables.unset(\"current_index\");\r",
+									"    pm.collectionVariables.unset(\"unit_type\");\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "3c76250d-eb3d-4916-953e-8702536b6ff4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/data/2.5/weather?lat={{lat}}&lon={{lon}}&appid={{api_key}}&units={{unit_type}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"data",
+								"2.5",
+								"weather"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "{{lat}}"
+								},
+								{
+									"key": "lon",
+									"value": "{{lon}}"
+								},
+								{
+									"key": "appid",
+									"value": "{{api_key}}"
+								},
+								{
+									"key": "units",
+									"value": "{{unit_type}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "d828e87c-3f87-4981-b53a-105472e95406"
+		},
+		{
+			"name": "Current Weather Barcelona",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f3c84e58-eea7-479c-8d9f-f0cbfda42c39",
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "8cb69e5f-bf13-41a9-9215-46f2e1891413",
+						"exec": [
+							"const response = pm.response.json();\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response Time\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.lessThan(100);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response is not empty\", () => {\r",
+							"    pm.expect(response).to.not.be.empty\r",
+							"})\r",
+							"\r",
+							"// COMPROBAR HEADERS ------------------------------\r",
+							"\r",
+							"// USANDO PM.EXPECT + TO.INCLUDE -----\r",
+							"pm.test(\"Check headers --USANDO EXPECT + INCLUDE--\", () => {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\"), \"-- Usando 'to.include' -- \").to.include(\"application/json\");\r",
+							"})\r",
+							"// USANDO DIRECTAMENTE PM.RESPONSE --- TIENE QUE SER ===\r",
+							"pm.test(\"Check Headers --USANDO PM.RESPONSE--\", () => {\r",
+							"    pm.response.to.have.header(\"Content-type\", \"application/json; charset=utf-8\");\r",
+							"})\r",
+							"\r",
+							"// USANDO UNA FUNCIÓN DEFINIDA A NIVEL COLLECTION [PRE-REQUEST]\r",
+							"\r",
+							"const searchValue = response.weather[0].main;\r",
+							"const valueDescription = response.weather[0].description;\r",
+							"const filteredArray = filteredWeatherData(response, searchValue);\r",
+							"\r",
+							"pm.test(\"Collection lvl Function Test\", () => {\r",
+							"    pm.expect(filteredArray, \"Element is not Array\").to.be.an(\"array\");\r",
+							"    pm.expect(filteredArray).to.not.be.empty;\r",
+							"    pm.expect(filteredArray[0].description.toLowerCase(), \"Obtained description does not match with spected\").to.eql(valueDescription);\r",
+							"})\r",
+							"\r",
+							"console.log(filteredArray);\r",
+							"\r",
+							"// USANDO UNA FUNCIÓN QUE INCLUYE EL TEST DEFINIDO A NIVEL COLLECTION [PRE-REQUEST]\r",
+							"\r",
+							"console.log(pm.response.code);\r",
+							"\r",
+							"responseStatus(200, pm.response.code);\r",
+							"\r",
+							"\r",
+							"// VALIDAR LA FECHA ----------------------------------\r",
+							"\r",
+							"pm.test(\"Validar Fecha\", () => {\r",
+							"    const dateHeader = pm.response.headers.get(\"Date\");\r",
+							"    const parsedDate = new Date(dateHeader);\r",
+							"    console.log(dateHeader);\r",
+							"    console.log(parsedDate);\r",
+							"    console.log(parsedDate.getTime());\r",
+							"    pm.expect(dateHeader, \"Date Header does NOT Exist\").not.to.be.null;\r",
+							"    pm.expect(parsedDate.getTime(), \"Date Format is NOT valid\").to.be.a(\"number\");\r",
+							"})\r",
+							"\r",
+							"\r",
+							"// UTILIZAR STRINGIFY -----------------------------\r",
+							"\r",
+							"console.log(\"Respuesta completa en texto: \", JSON.stringify(response))\r",
+							"\r",
+							"pm.test(\"Usar Stringify y 'to.have.property' \", ()=> {\r",
+							"    pm.expect(response.main, \"Humidity not Available\").to.have.property('humidity');\r",
+							"    pm.expect(JSON.stringify(response)).to.include(\"timezone\")\r",
+							"})\r",
+							"\r",
+							"\r",
+							"// UTILIZAR FIND() ---------------------------------\r",
+							"\r",
+							"\r",
+							"let currentWeather = response.weather.find(value => value.main === searchValue);\r",
+							"\r",
+							"pm.test(\"Utilizando FIND para filtrar valor\", () => {\r",
+							"    pm.expect(currentWeather, \"Object is Empty\").not.to.be.empty;\r",
+							"    pm.expect(currentWeather.description, \"Object Description does NOT MATCH with Expected\").to.eql(valueDescription);\r",
+							"})\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "5097ed23-3e76-4922-ad4e-77245ae2070a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/data/2.5/weather?lat={{lat}}&lon={{lon}}&appid={{api_key}}&units={{unit_type}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "{{lat}}"
+						},
+						{
+							"key": "lon",
+							"value": "{{lon}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{api_key}}"
+						},
+						{
+							"key": "units",
+							"value": "{{unit_type}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "75d4339f-63bb-4a7d-b982-6cb8aa86dcc3",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"\r",
+					"\r",
+					"filteredWeatherData = (weatherData, searchValue) => {\r",
+					"    return weatherData.weather.filter(value => value.main.includes(searchValue));\r",
+					"},\r",
+					"\r",
+					"responseStatus = (code, respCode)=> {\r",
+					"    return pm.test(`Status Code is ${code}`, ()=> {\r",
+					"        console.log(code);\r",
+					"        pm.expect((respCode), `ERROR: Status Code Recibido: ${respCode}. Esperado: ${code}`).to.eql(code);\r",
+					"    })\r",
+					"}\r",
+					"\r",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "b9c1d36d-842f-4309-bab2-fcecf1f0b62d",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "lat",
+			"value": ""
+		},
+		{
+			"key": "lon",
+			"value": ""
+		},
+		{
+			"key": "unit_type",
+			"value": ""
+		}
+	]
+}
