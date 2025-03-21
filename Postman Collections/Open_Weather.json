@@ -342,20 +342,9 @@
 			"name": "Current Weather Barcelona",
 			"event": [
 				{
-					"listen": "prerequest",
-					"script": {
-						"id": "f3c84e58-eea7-479c-8d9f-f0cbfda42c39",
-						"exec": [
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				},
-				{
 					"listen": "test",
 					"script": {
-						"id": "8cb69e5f-bf13-41a9-9215-46f2e1891413",
+						"id": "657b030c-ecb1-4881-a570-b8aa406a94ea",
 						"exec": [
 							"const response = pm.response.json();\r",
 							"\r",
@@ -438,11 +427,34 @@
 							"    pm.expect(currentWeather.description, \"Object Description does NOT MATCH with Expected\").to.eql(valueDescription);\r",
 							"})\r",
 							"\r",
+							"// UTILIZAR FOR EACH () ----------------------------\r",
+							"\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							" \r",
 							"\r",
 							"\r",
 							"\r",
 							"\r",
 							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "94610692-86e5-43b3-b96a-16757e92a0fd",
+						"exec": [
 							""
 						],
 						"type": "text/javascript",
