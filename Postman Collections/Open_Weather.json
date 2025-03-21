@@ -435,7 +435,8 @@
 							"});\r",
 							"\r",
 							"\r",
-							" \r",
+							" testCode(pm,200)\r",
+							"\r",
 							"\r",
 							"\r",
 							"\r",
@@ -506,7 +507,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "c7c14c21-2532-4d97-9793-eb77336d797e",
+				"id": "393a5fcb-daaa-444f-acbf-8c3f655b18f1",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -518,20 +519,26 @@
 					"\r",
 					"responseStatus = (statusCode, responseCode) => {\r",
 					"\r",
-					"return pm.test(`Status Code is ${statusCode}`, () => {\r",
-					"    \r",
+					"    return pm.test(`Status Code is ${statusCode}`, () => {\r",
+					"\r",
 					"        pm.expect((responseCode), `ERROR: Status Code Recibido: ${responseCode}. Esperado: ${statusCode}`).to.eql(statusCode);\r",
 					"    })\r",
 					"}\r",
 					"\r",
-					""
+					"testCode = function (pm, paramCode) {\r",
+					"\r",
+					"    pm.test(\"Your test name\", function () {\r",
+					"        var responeCode = pm.response.code;\r",
+					"        pm.expect(responeCode).to.eql(paramCode);\r",
+					"    });\r",
+					"}"
 				]
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
-				"id": "16a19998-2a47-4b28-9771-450fc23fa8cb",
+				"id": "24f21ebd-814d-495c-b5ac-83ca9bf51696",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
