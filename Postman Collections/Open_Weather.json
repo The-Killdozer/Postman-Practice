@@ -391,7 +391,7 @@
 							"\r",
 							"console.log(pm.response.code);\r",
 							"\r",
-							"responseStatus(200, pm.response.code);\r",
+							"responseStatus(200);\r",
 							"\r",
 							"\r",
 							"// VALIDAR LA FECHA ----------------------------------\r",
@@ -506,7 +506,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "75d4339f-63bb-4a7d-b982-6cb8aa86dcc3",
+				"id": "6fc2bc52-c153-4e56-9b86-a4e29a2b4ab5",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -516,12 +516,13 @@
 					"    return weatherData.weather.filter(value => value.main.includes(searchValue));\r",
 					"},\r",
 					"\r",
-					"responseStatus = (code, respCode)=> {\r",
-					"    return pm.test(`Status Code is ${code}`, ()=> {\r",
-					"        console.log(code);\r",
-					"        pm.expect((respCode), `ERROR: Status Code Recibido: ${respCode}. Esperado: ${code}`).to.eql(code);\r",
-					"    })\r",
-					"}\r",
+					"    responseStatus = (pm,statusCode) => {\r",
+					"        let respCode = pm.response.code;\r",
+					"        return pm.test(`Status Code is ${statusCode}`, () => {\r",
+					"\r",
+					"            pm.expect((respCode), `ERROR: Status Code Recibido: ${respCode}. Esperado: ${statusCode}`).to.eql(code);\r",
+					"        })\r",
+					"    }\r",
 					"\r",
 					""
 				]
@@ -530,7 +531,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "b9c1d36d-842f-4309-bab2-fcecf1f0b62d",
+				"id": "1aef5024-661d-49d7-8dbc-9c284cf75473",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
