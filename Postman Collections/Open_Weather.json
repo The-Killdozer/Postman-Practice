@@ -506,7 +506,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "e4631f01-c773-467c-b4af-97d9efbb0601",
+				"id": "2e0d399e-18b0-4445-9731-0862024eb04d",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -514,15 +514,15 @@
 					"\r",
 					"filteredWeatherData = (weatherData, searchValue) => {\r",
 					"    return weatherData.weather.filter(value => value.main.includes(searchValue));\r",
-					"},\r",
+					"};\r",
 					"\r",
-					"    responseStatus = (statusCode) => {\r",
+					"responseStatus = (statusCode) => {\r",
 					"\r",
-					"        return pm.test(`Status Code is ${statusCode}`, () => {\r",
+					"    return pm.test(`Status Code is ${statusCode}`, () => {\r",
 					"\r",
-					"            pm.expect((pm.response.code), `ERROR: Status Code Recibido: ${respCode}. Esperado: ${statusCode}`).to.eql(statusCode);\r",
-					"        })\r",
-					"    }\r",
+					"        pm.expect((pm.response.code), `ERROR: Status Code Recibido: ${respCode}. Esperado: ${statusCode}`).to.eql(statusCode);\r",
+					"    })\r",
+					"}\r",
 					"\r",
 					""
 				]
@@ -531,7 +531,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "194313db-257e-4911-9154-e9f581e0b2ce",
+				"id": "bbde889a-b819-4401-be5d-6113cdcd0f27",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
