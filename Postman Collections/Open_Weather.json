@@ -391,7 +391,7 @@
 							"\r",
 							"console.log(pm.response.code);\r",
 							"\r",
-							"responseStatus(200);\r",
+							"responseStatus(200, pm.response.code);\r",
 							"\r",
 							"\r",
 							"// VALIDAR LA FECHA ----------------------------------\r",
@@ -506,7 +506,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "2e0d399e-18b0-4445-9731-0862024eb04d",
+				"id": "c7c14c21-2532-4d97-9793-eb77336d797e",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -516,11 +516,11 @@
 					"    return weatherData.weather.filter(value => value.main.includes(searchValue));\r",
 					"};\r",
 					"\r",
-					"responseStatus = (statusCode) => {\r",
+					"responseStatus = (statusCode, responseCode) => {\r",
 					"\r",
-					"    return pm.test(`Status Code is ${statusCode}`, () => {\r",
-					"\r",
-					"        pm.expect((pm.response.code), `ERROR: Status Code Recibido: ${respCode}. Esperado: ${statusCode}`).to.eql(statusCode);\r",
+					"return pm.test(`Status Code is ${statusCode}`, () => {\r",
+					"    \r",
+					"        pm.expect((responseCode), `ERROR: Status Code Recibido: ${responseCode}. Esperado: ${statusCode}`).to.eql(statusCode);\r",
 					"    })\r",
 					"}\r",
 					"\r",
@@ -531,7 +531,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "bbde889a-b819-4401-be5d-6113cdcd0f27",
+				"id": "16a19998-2a47-4b28-9771-450fc23fa8cb",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
